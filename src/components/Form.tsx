@@ -2,9 +2,9 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import { DataModal } from '../models/Data';
-import { useState } from 'react';
-import { InputGroup } from 'react-bootstrap';
-// import { Form, Field } from 'react-final-form'
+import { useEffect, useState } from 'react';
+import { Col, FloatingLabel, InputGroup, Row } from 'react-bootstrap';
+import { Form as FinalForm, Field } from 'react-final-form'
 
 interface StudentProps {
   children?: React.ReactNode;
@@ -20,14 +20,16 @@ const initialFormState: DataModal = {
 };
 
 const [formState, setFormState] = useState<DataModal>(initialFormState);
+const [resetField, setResetField] = useState(false);
 
-  const handleOnSubmit = (e: any) => {
+  const handleOnSubmit = () => {
+    setResetField(!resetField)
     const formEle = document.querySelector("form")
-    e.preventDefault()
+    // e.preventDefault()
     setFormState(initialFormState)
     if(formEle != null){
       const formData = new FormData(formEle)
-      fetch("https://script.google.com/macros/s/AKfycbxjsE5dbDKkZTwNCiadf01RvQEG2cpgf0W5JU5f4R8QvDY1j3cBDlsO9PFiBN2W-mR_/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbz6V7A_4N9P4PNeoQmV1Gk-4Jr14TqNxCsEdJ1zoLG6PoyHcVt3vRZZbHBNkNPmPPUV7Q/exec", {
       method: "POST",
       body: formData
     }).then((res) => res.json()).then((data) => {
@@ -35,76 +37,61 @@ const [formState, setFormState] = useState<DataModal>(initialFormState);
       setFormState(initialFormState)
     }).catch((error) => console.log(error))
     }
-    
-  }
-
-  const handleInputChange= (e: any) => {
-    setFormState(e)
   }
 
   return (
-    <Card>
-      <Card.Body>
-        <Form onSubmit={handleOnSubmit}>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="inputGroup-sizing-default">
-              First Name
-            </InputGroup.Text>
-            <Form.Control
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              type="text"
-              name="FirstName"
-              value={formState.FirstName}
-              onChange={handleInputChange}
-            />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="inputGroup-sizing-default">
-              Last Name
-            </InputGroup.Text>
-            <Form.Control
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              type="text"
-              name="LastName"
-              value={formState.LastName}
-              onChange={handleInputChange}
-            />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="inputGroup-sizing-default">
-              Email
-            </InputGroup.Text>
-            <Form.Control
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              type="email"
-              name="Email"
-              value={formState.Email}
-              onChange={handleInputChange}
-            />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="inputGroup-sizing-default">
-              Address
-            </InputGroup.Text>
-            <Form.Control
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              type="text"
-              name="Address"
-              value={formState.Address}
-              onChange={handleInputChange}
-            />
-          </InputGroup>
-          <div style={{display: 'flex', justifyContent: 'end'}}>
-            <Button type='submit' variant="primary me-2">Submit</Button>
-          </div>
-        </Form>
-      </Card.Body>
-    </Card>
-
+<FinalForm
+    onSubmit={handleOnSubmit}
+  >
+    {({handleSubmit, form, values}) => {
+      useEffect(() => {
+        form.reset()
+      }, [resetField])
+      return (
+        <Card>
+          <Card.Body>
+              <Form onSubmit={handleSubmit}>
+              <div style={{display: 'flex', gap: '3px', flexDirection: 'column'}}>
+                <FloatingLabel controlId="FirstName" label="First Name">
+                  <Field name="FirstName">
+                    {({ input }) => (
+                      <Form.Control {...input} type="text" placeholder="Enter your first name" />
+                    )}
+                  </Field>
+                </FloatingLabel>
+                <FloatingLabel controlId="LastName" label="Last Name">
+                  <Field name="LastName">
+                    {({ input }) => (
+                      <Form.Control {...input} type="text" placeholder="Enter your last name" />
+                    )}
+                  </Field>
+                </FloatingLabel>
+                <FloatingLabel controlId="Email" label="Email">
+                  <Field name="Email">
+                    {({ input }) => (
+                      <Form.Control {...input} type="text" placeholder="Enter your email" />
+                    )}
+                  </Field>
+                </FloatingLabel>
+                <FloatingLabel controlId="Address" label="Address">
+                  <Field name="Address">
+                    {({ input }) => (
+                      <Form.Control {...input} type="text" placeholder="Enter your address" />
+                    )}
+                  </Field>
+                </FloatingLabel>
+              </div>
+              
+              <div style={{display: 'flex', justifyContent: 'start', marginTop: '0.8em'}}>
+                <Button type='submit'>Submit</Button>
+              </div>
+                
+              </Form>
+              </Card.Body>
+        </Card>
+      )
+    }}
+  </FinalForm>
   )
 }
 
