@@ -25,14 +25,17 @@ const [formState, setFormState] = useState<DataModal>(initialFormState);
     const formEle = document.querySelector("form")
     e.preventDefault()
     setFormState(initialFormState)
-    const formData = new FormData(formEle)
-    fetch("https://script.google.com/macros/s/AKfycbxjsE5dbDKkZTwNCiadf01RvQEG2cpgf0W5JU5f4R8QvDY1j3cBDlsO9PFiBN2W-mR_/exec", {
+    if(formEle != null){
+      const formData = new FormData(formEle)
+      fetch("https://script.google.com/macros/s/AKfycbxjsE5dbDKkZTwNCiadf01RvQEG2cpgf0W5JU5f4R8QvDY1j3cBDlsO9PFiBN2W-mR_/exec", {
       method: "POST",
       body: formData
     }).then((res) => res.json()).then((data) => {
       console.log(data)
       setFormState(initialFormState)
     }).catch((error) => console.log(error))
+    }
+    
   }
 
   const handleInputChange= (e: any) => {
@@ -95,7 +98,9 @@ const [formState, setFormState] = useState<DataModal>(initialFormState);
               onChange={handleInputChange}
             />
           </InputGroup>
-          <Button type='submit' variant="primary me-2">Submit</Button>
+          <div style={{display: 'flex', justifyContent: 'end'}}>
+            <Button type='submit' variant="primary me-2">Submit</Button>
+          </div>
         </Form>
       </Card.Body>
     </Card>
