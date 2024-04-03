@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import { DataModal } from '../models/Data';
+// import { DataModal } from '../models/Data';
 import { useEffect, useState } from 'react';
-import { Col, FloatingLabel, InputGroup, Row } from 'react-bootstrap';
+import { FloatingLabel } from 'react-bootstrap';
 import { Form as FinalForm, Field } from 'react-final-form'
 
 interface StudentProps {
@@ -12,21 +12,19 @@ interface StudentProps {
 
 const MainForm: React.FC<StudentProps> = ({}) => {
 
-const initialFormState: DataModal = {
-    FirstName: '',
-    LastName: '',
-    Email: '',
-    Address: '',
-};
+// const initialFormState: DataModal = {
+//     FirstName: '',
+//     LastName: '',
+//     Email: '',
+//     Address: '',
+// };
 
-const [formState, setFormState] = useState<DataModal>(initialFormState);
 const [resetField, setResetField] = useState(false);
 
   const handleOnSubmit = () => {
     setResetField(!resetField)
     const formEle = document.querySelector("form")
     // e.preventDefault()
-    setFormState(initialFormState)
     if(formEle != null){
       const formData = new FormData(formEle)
       fetch("https://script.google.com/macros/s/AKfycbz6V7A_4N9P4PNeoQmV1Gk-4Jr14TqNxCsEdJ1zoLG6PoyHcVt3vRZZbHBNkNPmPPUV7Q/exec", {
@@ -34,7 +32,6 @@ const [resetField, setResetField] = useState(false);
       body: formData
     }).then((res) => res.json()).then((data) => {
       console.log(data)
-      setFormState(initialFormState)
     }).catch((error) => console.log(error))
     }
   }
@@ -43,7 +40,7 @@ const [resetField, setResetField] = useState(false);
 <FinalForm
     onSubmit={handleOnSubmit}
   >
-    {({handleSubmit, form, values}) => {
+    {({handleSubmit, form}) => {
       useEffect(() => {
         form.reset()
       }, [resetField])
