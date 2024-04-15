@@ -13,12 +13,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/notyf": "^3.0.0",
     "bootstrap": "^5.3.3",
     "final-form": "^4.20.10",
+    "notyf": "^3.10.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
-    "react-final-form": "^6.5.9"
+    "react-final-form": "^6.5.9",
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
