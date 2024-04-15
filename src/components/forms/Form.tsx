@@ -53,9 +53,6 @@ const [validated, setValidated] = useState(false);
   return (
 <FinalForm
     onSubmit={handleOnSubmit}
-    validateOnBlur
-    validateOnChange
-    validated={true}
   >
     {({handleSubmit, form}) => {
       useEffect(() => {
@@ -64,15 +61,15 @@ const [validated, setValidated] = useState(false);
       return (
         <Card>
           <Card.Body>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} noValidate validated={validated}>
               <div style={{display: 'flex', gap: '3px', flexDirection: 'column'}}>
                 <FloatingLabel controlId="FirstName" label="First Name">
                   <Field name="FirstName" validate={required} >
                     {({ input, meta }) => (
                       <>
                         <Form.Control {...input} type="text" placeholder="Enter your first name" autoComplete='off'/>  
-                        <Form.Control.Feedback>Hey!</Form.Control.Feedback>       
-                        {/* {meta.touched && meta.error && <span 
+                        {/* <Form.Control.Feedback>Hey!</Form.Control.Feedback>        */}
+                        {meta.touched && meta.error && <span 
                         style={{
                           color: 'red', 
                           marginTop: '-19%',
@@ -80,7 +77,7 @@ const [validated, setValidated] = useState(false);
                           position: 'absolute', 
                           zIndex: '1'
                           }}
-                          >{meta.error}</span>}   */}
+                          >{meta.error}</span>}  
                       </>
                     )}
                   </Field>
@@ -90,7 +87,7 @@ const [validated, setValidated] = useState(false);
                     {({ input, meta }) => (
                       <>
                       <Form.Control {...input} type="text" placeholder="Enter your last name" autoComplete='off' />
-                      {/* {meta.touched && meta.error && <span 
+                      {meta.touched && meta.error && <span 
                       style={{
                         color: 'red', 
                         marginTop: '-19%',
@@ -98,7 +95,7 @@ const [validated, setValidated] = useState(false);
                         position: 'absolute', 
                         zIndex: '1'
                         }}
-                      >{meta.error}</span>}   */}
+                      >{meta.error}</span>}  
                       </>
                       
                     )}
@@ -110,7 +107,7 @@ const [validated, setValidated] = useState(false);
                     {({ input, meta }) => (
                       <>
                         <Form.Control {...input} type="email" placeholder="Enter your email" autoComplete='off' />
-                        {/* {meta.touched && meta.error && <span 
+                        {meta.touched && meta.error && <span 
                         style={{
                           color: 'red', 
                           marginTop: '-19%',
@@ -118,7 +115,7 @@ const [validated, setValidated] = useState(false);
                           position: 'absolute', 
                           zIndex: '1'
                           }}
-                        >{meta.error}</span>}   */}
+                        >{meta.error}</span>}  
                       </>
                       
                     )}
@@ -130,13 +127,13 @@ const [validated, setValidated] = useState(false);
                     {({ input, meta }) => (
                       <>
                         <Form.Control {...input} type="text" placeholder="Enter your address" autoComplete='off' />
-                        {/* {meta.touched && meta.error && <span style={{
+                        {meta.touched && meta.error && <span style={{
                           color: 'red', 
                           marginTop: '-19%',
                           marginLeft: '55%',
                           position: 'absolute', 
                           zIndex: '1'
-                          }}>{meta.error}</span>}   */}
+                          }}>{meta.error}</span>}  
                       </>
                       
                     )}
@@ -157,13 +154,13 @@ const [validated, setValidated] = useState(false);
                         )
                       }
                     </Form.Select>
-                      {/* {meta.touched && meta.error && <span style={{
+                      {meta.touched && meta.error && <span style={{
                         color: 'red', 
                         marginTop: '-19%',
                         marginLeft: '55%',
                         position: 'absolute', 
                         zIndex: '1'
-                        }}>{meta.error}</span>}   */}
+                        }}>{meta.error}</span>}  
                   </FloatingLabel>
                   )}
                 </Field>
@@ -184,40 +181,3 @@ const [validated, setValidated] = useState(false);
 }
 
 export default MainForm;
-
-
-//   <div style={{position: 'relative'}}>
-                  //   <Select
-                  //     className="basic-single"
-                  //     classNamePrefix="select"
-                  //     {...input}
-                  //     options={values}
-                  //     isSearchable={true}
-                  //     isClearable={true}
-                  //     isRtl={false}
-                  //     placeholder='Gender'
-                  //     styles={{
-                  //       control: (provided) => ({
-                  //         ...provided,
-                  //         textAlign: 'left',
-                  //       }),
-                  //       option: (provided) => ({
-                  //         ...provided,
-                  //         textAlign: 'left'
-                  //       }),
-                  //       singleValue: (provided) => ({
-                  //         ...provided,
-                  //         textAlign: 'left',
-                  //       }),
-                  //     }}
-                  //   />
-                  //   {meta.touched && meta.error && <span 
-                  //       style={{
-                  //         color: 'red', 
-                  //         marginTop: '-19%',
-                  //         marginLeft: '55%',
-                  //         position: 'absolute', 
-                  //         zIndex: '1'
-                  //         }}
-                  //       >{meta.error}</span>} 
-                  // </div>
